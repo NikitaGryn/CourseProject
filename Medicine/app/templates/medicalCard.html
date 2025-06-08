@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% block title %}Медицинская карта{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/js/date-fields.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/medicalCardToggleRegistrationAddress.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/medicalCardHighlightActive.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/scrollToTop.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/toggleSubmitForm.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header2.css') }}">
+
+    <!-- <script>
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove 'active' class from all items
+                    sidebarItems.forEach(i => i.classList.remove('active'));
+
+                    // Add 'active' class to the clicked item
+                    item.classList.add('active');
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const byAddressButton = document.getElementById('byAddressButton');
+            const registrationAddressSection = document.querySelectorAll('.registrationAddressSection');
+
+            byAddressButton.addEventListener('click', function() {
+                console.log('123');
+                registrationAddressSection.forEach(section => {
+                    if(section.style.display=='flex'){
+                        section.style.display = 'none';
+                    }else{
+                        section.style.display = 'flex';
+                    }
+                });
+            });
+        });
+    </script> -->
+</head>
+<body class="container">
+    <div class="container">
+        <form id="signupForm" action="/medical-card" method="POST" class="medicalCardContainer">
+            <div class="container big centerItemsW mainSection">
+                <div class="container big centerItemsW">
+                    <div class="container fullWidth marginTop20px" id="formDiv">
+                        <div id="personalDataLink">
+                            <div class="container">
+                                <h3 class="regular formTitle">Персональные данные</h3>
+                                    {{ form.csrf_token }}
+                                    {{ form.surname(placeholder="Фамилия", value=form.surname.data or '') }}
+                                    {{ form.firstname(placeholder="Имя", value=form.firstname.data or '') }}
+                                    {{ form.patronymic(placeholder="Отчество", value=form.patronymic.data or '') }}
+
+                                    <div class="container row">
+                                        <div class="container row">
+                                            <input type="radio" name="gender" id="male" class="hide" value="male" {% if form.data.gender == 'male' %} checked {% endif %}>
+                                            <label for="male" class="button white medium white">Мужской</label>
+                                            <input type="radio" name="gender" id="female" class="hide" value="female" {% if form.data.gender == 'female' %} checked {% endif %}>
+                                            <label for="female" class="button white medium white">Женский</label>
+                                        </div>
+                                    </div>
+
+                                    {{ form.dob(class="date-field", placeholder="Дата рождения: дд.мм.гггг", value=form.dob.data or '') }}
+                                    {{ form.passport(placeholder="Личный Номер паспорта", value=form.passport.data or '') }}
+                                    {{ form.family(id="passportDataLink", placeholder="Семейное положение", value=form.family.data or '') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container big centerItemsW">
+                    <div class="container centerItemsW">
+                        <div class="container fullWidth marginTop20px   " id="formDiv">
+                            <div class="container">
+                                <h3 class="regular formTitle">Удостоверение личности</h3>
+                                {{ form.document_type(placeholder="Документ", value=form.document_type.data or '') }}
+                                <div class="container row twoInputs">
+                                    {{ form.document_serial(class="small", placeholder="Серия", value=form.document_serial.data or '') }}
+                                    {{ form.document_number(placeholder="Номер", value=form.document_number.data or '') }}
+                                </div>
+                                {{ form.document_authority(placeholder="Кем выдан", value=form.document_authority.data or '') }}
+                                {{ form.document_issue_date(class="date-field", id="livingAddressDataLink", placeholder="Дата выдачи: dd.mm.yy", value=form.document_issue_date.data or '') }}
+                                <!-- {{ form.dob(placeholder="Дата рождения: дд.мм.гггг", value=form.dob.data or '') }} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container big centerItemsW">
+                    <div class="container centerItemsW">
+                        <div class="container fullWidth marginTop20px   " id="formDiv">
+                            <div class="container">
+                                <h3 class="regular formTitle">Адрес проживания</h3>
+                                <div class="container row">
+                                    {{ form.region(class="small marginRight15px", placeholder="Область", value=form.region.data or '') }}
+                                    {{ form.city(class="big", placeholder="Населенный пункт", value=form.city.data or '') }}
+                                </div>
+                                <div class="container row">
+                                    {{ form.street(class="big marginRight15px", placeholder="Улица/Переулок/Проезд", value=form.street.data or '') }}
+                                    {{ form.house(class="small", placeholder="Дом", value=form.house.data or '') }}
+                                </div>
+                                <div class="container row">
+                                    {{ form.building(class="small marginRight15px", placeholder="Корпус", value=form.building.data or '') }}
+                                    {{ form.entrance(class="small marginRight15px", placeholder="Подъезд", value=form.entrance.data or '') }}
+                                    {{ form.apartment(class="small", placeholder="Квартира", value=form.apartment.data or '') }}
+                                </div>
+                                {{ form.home_phone(placeholder="Домашний телефон", value=form.home_phone.data or '') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container big centerItemsW">
+                    <div class="container centerItemsW">
+                        <div class="container fullWidth marginTop20px   " id="formDiv">
+                            <div class="container">
+                                <h3 class="regular formTitle" id="registrationAddressDataLink">Адрес регистрации</h3>
+                                <div class="container row registrationAddressSection" style="display: flex;">
+                                    {{ form.registration_region(class="small marginRight15px", placeholder="Область", value=form.registration_region.data or '') }}
+                                    {{ form.registration_city(class="big", placeholder="Населенный пункт", value=form.registration_city.data or '') }}
+                                </div>
+                                <div class="container row registrationAddressSection" style="display: flex;">
+                                    {{ form.registration_street(class="big marginRight15px", placeholder="Улица/Переулок/Проезд", value=form.registration_street.data or '') }}
+                                    {{ form.registration_house(class="small", placeholder="Дом", value=form.registration_house.data or '') }}
+                                </div>
+                                <div class="container row registrationAddressSection" style="display: flex;">
+                                    {{ form.registration_building(class="small marginRight15px", placeholder="Корпус", value=form.registration_building.data or '') }}
+                                    {{ form.registration_entrance(class="small marginRight15px", placeholder="Подъезд", value=form.registration_entrance.data or '') }}
+                                    {{ form.registration_apartment(class="small", placeholder="Квартира", value=form.registration_apartment.data or '') }}
+                                </div>
+                                <div class="container row left">
+                                    <input type="checkbox" name="registration_checkbox" id="registrationAddressEqualLivivngAddress" name="livingAddressBtn" value="registrationAddressEqualLivivngAddress" class="checkbox-custom">
+                                    <label for="registrationAddressEqualLivivngAddress" class="checkbox-custom-label" id="byAddressButton">По адресу проживания</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container big centerItemsW">
+                    <div class="container centerItemsW">
+                        <div class="container fullWidth marginTop20px   " id="formDiv">
+                            <div class="container">
+                                <h3 class="regular formTitle" id="benefitsAndInsuranceDataLink">Льготы и страхования</h3>
+                                <h5 class="inputPreLabel thin">Страховой полис</h5>
+                                <div class="container row twoInputs inputTopNoRound">
+                                    {{ form.insurance_serial(class="small inputTopNoRound", placeholder="Серия", value=form.insurance_serial.data or '') }}
+                                    {{ form.insurance_number(placeholder="Номер", value=form.insurance_number.data or '') }}
+                                </div>
+                                <div class="container row twoInputs">
+                                    {{ form.disability(class="medium", placeholder="Инвалидность", value=form.disability.data or '') }}
+                                    {{ form.disability_group(class="medium", placeholder="Группа", value=form.disability_group.data or '') }}
+                                </div>
+                                {{ form.benefit_document(placeholder="Документ на право льготного обслуживания", value=form.benefit_document.data or '') }}
+                                {{ form.payment_type(placeholder="Вид оплаты", value=form.payment_type.data or '') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container big centerItemsW">
+                    <div class="container centerItemsW">
+                        <div class="container fullWidth marginTop20px   " id="formDiv">
+                            <div class="container">
+                                <h3 class="regular formTitle" id="medicalIdinticationsDataLink">Медицинские показания</h3>
+                                {{ form.allergic_history(placeholder="Аллергический анамнез", value=form.allergic_history.data or '') }}
+                                {{ form.medication_intolerance(placeholder="Лекарственная непереносимость", value=form.medication_intolerance.data or '') }}
+                                <div class="container row">
+                                    {{ form.blood_group(class="small marginRight15px", placeholder="Группа крови", value=form.blood_group.data or '') }}
+                                    {{ form.rhesus(class="small marginRight15px", placeholder="Резус", value=form.rhesus.data or '') }}
+                                    {{ form.blood_belongs(class="small", placeholder="Принадлежность", value=form.blood_belongs.data or '') }}
+                                </div>
+                                {{ form.vaccine_reactions(placeholder="Реакции на прививки", value=form.vaccine_reactions.data or '') }}
+                                {{ form.blood_transfusion(placeholder="Переливание крови", value=form.blood_transfusion.data or '') }}
+                                {{ form.surgical_intervention(placeholder="Хирургическое вмешательство", value=form.surgical_intervention.data or '') }}
+                                {{ form.previous_infectious_diseases(placeholder="Перенесенные инфекционные заболевания", rows="4", value=form.previous_infectious_diseases.data or '') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- flash() errors -->
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}    
+            
+                <!-- forms errors -->
+                {% for field, errors in form.errors.items() %}
+                    {% for error in errors %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                <div class="container rowReverse marginTop80px fullWidth">
+                    {{ form.submit(class="button", id="submitBtn") }}
+                </div>
+            </div>
+        </form>
+        <div class="medicalCardSidebar">
+            <a class="black" onclick="scrollToTop()"><h5 class="active">Персональные данные</h5></a>
+            <a href="/medical-card#passportDataLink" class="black"><h5>Удостоверение личности</h5></a>
+            <a href="/medical-card#livingAddressDataLink" class="black"><h5>Адрес проживания</h5></a>
+            <a href="/medical-card#registrationAddressDataLink" class="black"><h5>Адрес регистрации</h5></a>
+            <a href="/medical-card#benefitsAndInsuranceDataLink" class="black"><h5>Льготы и страхования</h5></a>
+            <a href="/medical-card#medicalIdinticationsDataLink" class="black"><h5>Медицинские показания</h5></a>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <button class="fixedButton"><img src="static/images/chat.png" id="gptIcon" class="gptIcon logo" height="40px"></button>
+        <div class="chat">
+            <div class="chat-title">
+                <figure class="avatar">
+                    <img src="static/images/chatAvatar.jpg" />
+                </figure>
+                <div>
+                    <h1>Medical Assistant</h1>
+                    <h2>AI chat</h2>    
+                </div>
+                <button class="fixedButton" id="closeChatBtn" class="closeChatBtnImg"><img src="static/images/close.svg" class="logo white"></button>
+            </div>
+            <div class="messages">
+                <div class="messages-content"></div>
+            </div>
+            <div class="message-box">
+                <textarea type="text" name="chat_input" class="message-input" placeholder="Type message..." style="overflow: hidden;"></textarea>
+                <button type="submit" name="chat_send" class="message-submit"><img src="static/images/chatSendMessagePhoto.png"></button>
+            </div>
+        </div>
+        </div>
+
+<!--            &lt;!&ndash; profile menu &ndash;&gt;-->
+<!--    {% if current_user.patient or current_user.doctor %}-->
+<!--    <div class="menu">-->
+<!--        <div id="menuProfileDiv">-->
+<!--            {% if current_user.patient %}-->
+<!--                {% if current_user.patient.photo_path %}-->
+<!--                    <img src="{{ url_for('uploaded_file', filename=current_user.patient.photo_path) }}" width="40px">-->
+<!--                {% else %}-->
+<!--                    <img src="static/images/profileLogo.svg" width="40px">-->
+<!--                {% endif %}-->
+<!--            {% else %}-->
+<!--                {% if current_user.doctor.photo_path %}-->
+<!--                    <img src="{{ url_for('uploaded_file', filename=current_user.doctor.photo_path) }}" width="40px">-->
+<!--                {% else %}-->
+<!--                    <img src="static/images/profileLogo.svg" width="40px">-->
+<!--                {% endif %}-->
+<!--            {% endif %}-->
+<!--            <div>-->
+<!--                <h4 id="name">-->
+<!--                    {% if current_user.patient %}-->
+<!--                    <span>{{ current_user.patient.firstname }} {{ current_user.patient.surname }}</span>-->
+<!--                    {% else %}-->
+<!--                    <span>{{ current_user.doctor.firstname }} {{ current_user.doctor.surname }}</span>-->
+<!--                    {% endif %}-->
+<!--                <h5 id="email">{{ current_user.username }}</h5>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="menuItem">-->
+<!--            <img src="static/images/doctorsList.svg" width="40px"  style="filter: invert(1);">-->
+<!--            <a href="doctor_list">Наши специалисты</a>-->
+<!--        </div>-->
+<!--        <div class="menuItem">-->
+<!--            <img src="static/images/appointments.svg" width="40px">-->
+<!--            {% if current_user.patient %}-->
+<!--                <a href="patient-appointments">Записи</a>-->
+<!--            {% else %}-->
+<!--                <a href="doctor_appointments">Записи</a>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--        <div class="menuItem">-->
+<!--            <img src="static/images/navigation.png" width="40px">-->
+<!--            <a href="navigation">Навигация по БЗ</a>-->
+<!--        </div>-->
+<!--        <div class="menuItem">-->
+<!--            <img src="static/images/recommendation.png" width="40px">-->
+<!--            <a href="recommendation">Рекомендации по здоровью</a>-->
+<!--        </div>-->
+<!--        <div class="menuItem">-->
+<!--            <img src="static/images/blood_test.png" width="40px">-->
+<!--            <a href="blood_test">Анализ крови</a>-->
+<!--        </div>-->
+<!--        {% if current_user.patient %}-->
+<!--        <div class="menuItem active">-->
+<!--            <img src="static/images/medicalCard.png" width="40px">-->
+<!--            <a href="medical-card">Медицинская карта</a>-->
+<!--        </div>     -->
+<!--        {% endif %} -->
+<!--           -->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarItems = document.querySelectorAll('.sidebar h5');
+
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove 'active' class from all items
+                sidebarItems.forEach(i => i.classList.remove('active'));
+
+                // Add 'active' class to the clicked item
+                item.classList.add('active');
+            });
+        });
+    });
+    </script> -->
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const byAddressButton = document.getElementById('registrationAddressEqualLivivngAddress');
+    const registrationAddressSection = document.querySelectorAll('.registrationAddressSection');
+
+    var sourceFields = {
+        region: document.querySelector('input[name="region"]'),
+        city: document.querySelector('input[name="city"]'),
+        street: document.querySelector('input[name="street"]'),
+        house: document.querySelector('input[name="house"]'),
+        building: document.querySelector('input[name="building"]'),
+        entrance: document.querySelector('input[name="entrance"]'),
+        apartment: document.querySelector('input[name="apartment"]')
+    };
+
+    var targetFields = {
+        region: document.querySelector('input[name="registration_region"]'),
+        city: document.querySelector('input[name="registration_city"]'),
+        street: document.querySelector('input[name="registration_street"]'),
+        house: document.querySelector('input[name="registration_house"]'),
+        building: document.querySelector('input[name="registration_building"]'),
+        entrance: document.querySelector('input[name="registration_entrance"]'),
+        apartment: document.querySelector('input[name="registration_apartment"]')
+    };
+
+    function updateRegistrationFields() {
+        Object.keys(sourceFields).forEach(field => {
+            targetFields[field].value = sourceFields[field].value;
+        });
+    }
+
+    function hideRegistrationAddressSection() {
+        registrationAddressSection.forEach(section => {
+            if (byAddressButton.checked) {
+                section.style.display = 'none';
+                updateRegistrationFields();
+            } else {
+                section.style.display = 'flex';
+            }
+        });
+    }
+
+    if (Object.keys(sourceFields).every(field => sourceFields[field].value === targetFields[field].value)) {
+        byAddressButton.checked = true;
+        hideRegistrationAddressSection();
+    }
+
+    byAddressButton.addEventListener('change', function() {
+        hideRegistrationAddressSection();
+    });
+});
+
+</script> -->
+<!-- <script>
+function scrollToTop() {
+    window.scrollTo(0, 0);
+}
+</script> -->
+<!-- <script>
+    document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('signupForm').submit();
+        });
+</script> -->
+<script>
+$(document).ready(function() {
+    function updateActiveTab(targetLink) {
+        $('.medicalCardSidebar a h5').removeClass('active');
+        targetLink.find('h5').addClass('active');
+    }
+
+    // Плавный скролл
+    $('.medicalCardSidebar a').click(function(e) {
+        const href = $(this).attr('href');
+
+        if (href && href.includes('#')) {
+            e.preventDefault();
+            const target = href.split('#')[1];
+            const targetElement = $(`#${target}`);
+
+            if (targetElement.length) {
+                $('html, body').animate({
+                    scrollTop: targetElement.offset().top - 100
+                }, 200);
+
+                updateActiveTab($(this));
+            }
+        }
+    });
+
+    // Подсветка активной вкладки при скролле
+    $(window).scroll(function() {
+        const scrollPosition = $(window).scrollTop() + 150;
+
+        $('.medicalCardSidebar a').each(function() {
+            const href = $(this).attr('href');
+
+            if (href && href.includes('#')) {
+                const target = href.split('#')[1];
+                const targetElement = $(`#${target}`);
+
+                if (targetElement.length &&
+                    targetElement.offset().top <= scrollPosition &&
+                    targetElement.offset().top + targetElement.outerHeight() > scrollPosition) {
+
+                    updateActiveTab($(this));
+                }
+            }
+        });
+    });
+
+    $(window).trigger('scroll');
+});
+
+
+</script>
+</body>
+{% endblock %}
+    

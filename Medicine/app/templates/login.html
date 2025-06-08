@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="login">
+    <div class="container center marginTop80px" id="loginDiv">
+        <div>
+            <h1 id="loginTitle">Добро пожаловать!</h1>
+        </div>
+        <div class="container small padding25px spacebtw lightBlueBG rounded">
+            <div class="container center">
+                <form action="/login" class="container" method="POST">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        {{ form.username(class="form-control", placeholder="Адрес электронной почты") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password(class="form-control", placeholder="Пароль") }}
+                    </div>
+                    {{ form.submit(class="button wide", value="Войти") }}
+                </form>
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="create-line-left-right marginTop20px">
+                    <p class="gray thin">или</p>
+                </div>
+                <h5 class="gray thin marginTop20px">Впервые у нас? <a href="/register">Зарегистрироваться</a></h5>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

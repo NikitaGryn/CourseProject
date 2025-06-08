@@ -1,0 +1,1969 @@
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+
+h1.thin,
+h2.thin,
+h3.thin,
+h4.thin,
+h5.thin,
+h6.thin{
+    font-weight: 100;
+}
+
+.regular{
+  font-weight: 500;
+}
+
+h1{
+  font-size: 85pt;
+  margin: 0;
+}
+
+h2{
+  font-size: 50pt;
+  margin: 0;
+}
+
+h3{
+  font-size: 30pt;
+  margin: 0;
+}
+
+h4{
+  font-size: 20pt;
+  margin: 0;
+}
+
+h5{
+  font-size: 13pt;
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  display: flex;
+  min-height: 100vh; /* Change this to min-height */
+  scroll-behavior: smooth;
+  box-sizing: border-box !important;
+  overflow-x: hidden;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  align-items: center;
+  margin: 0; /* Add this to remove default margin */
+  font-family: 'Helvetica', Arial, sans-serif;
+}
+
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+a{
+    color: #278375;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+a:hover{
+  text-decoration: underline;
+}
+
+.black{
+  color: #000;
+  text-decoration: none;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+input{
+    margin-bottom: 3%;
+    border: 1px;
+    background: #FFFFFF78;
+}
+
+.hide {
+  display: none;
+}
+
+/* Style to make labels look like radio buttons */
+input[type="radio"] + label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #014C35;
+  color: #fff;
+  transition: linear 0.15s;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 3% 3%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #339989;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+#firstTime{
+  margin-top: 15px;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container.leftW{
+    height: 100%;
+    display: flex;
+    margin-left: -40%;
+}
+
+.leftW{
+  text-align: left;
+}
+
+.centerH{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounded{
+    border-radius: 24px;
+}
+
+.small{
+  width: 33%;
+}
+
+.medium{
+  width: 60%;
+}
+
+.big{
+  width: 80%;
+}
+
+.row{
+  display: flex;
+    flex-direction: column;
+}
+
+.center{
+  justify-content: center;
+  align-items: center;
+}
+
+.centerW{
+  align-content: center;
+}
+
+.centerItemsW{
+  align-items: center;
+}
+
+
+.spacebtw{
+    justify-content: space-between;
+}
+
+
+.container.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.spacebtw{
+  display: flex;
+  justify-content: space-between;
+}
+
+.lightBlueBG{
+    background-color: #FFFFFF78;
+}
+
+.logIn{
+    overflow: hidden;
+}
+
+.hidden{
+  display: none !important;
+}
+
+.login{
+  display: flex;
+  height: 100vh; /* Change this to min-height */
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  align-items: center;
+  margin: 0; /* Add this to remove default margin */
+  font-family: 'Helvetica', Arial, sans-serif;
+    background-image: url("images/login.png");
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.signup {
+  background-image: url("images/signup.png");
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Add this */
+  margin: 0;    /* Add this to remove default margin */
+}
+
+.signup.tinted{
+	background-image: url("images/signupTinted.png");
+  background-size: cover;
+
+}
+
+#welcome{
+    font-size: 80pt;
+    color: #1A5E53;
+}
+
+#signup{
+  font-size: 30pt;
+  font-weight: 600;
+  color: #1A5E53;
+}
+
+.padding25px{
+  padding: 25px;
+}
+
+.padding25pxW{
+  padding: 0px 25px;
+}
+
+
+.padding80px{
+  padding: 80px;
+}
+
+.padding100pxW{
+  padding: 0px 100px;
+}
+
+
+.button{
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    background-color: #339989FC;
+    color: white;
+    margin: 8px 0px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 5px solid #339989FC;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.button:hover{
+  border-color:  #339989FC;
+  background-color: transparent;
+  color: #1A5E49;
+  text-decoration: none;
+  transition: ease-in-out 0.15;
+}
+
+.button.white{
+    background-color: white;
+    color: #339989FC;
+    border: 1px solid #339989FC;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button.wide{
+  width: 100%;
+}
+
+.mint{
+  background-color: #E3F8F3;
+}
+
+.fullHeight{
+  height: 100%;
+}
+
+.fullWidth{
+  width: 100%;
+}
+
+
+.marginTop10px{
+  margin-top: 10px;
+}
+
+.marginTop20px{
+  margin-top: 20px;
+}
+
+.marginW30px{
+  margin: 0 30px;
+}
+
+
+.marginTop40px{
+  margin-top: 40px;
+}
+
+
+.marginTop80px{
+  margin-top: 80px;
+}
+
+.marginTop120px{
+  margin-top: 120px;
+}
+
+.marginBottom{
+  margin-bottom: 40px;
+}
+
+.marginW10px{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#signupTitle{
+  font-size: 30pt;
+  color: #1A5E53;
+}
+
+#loginTitle{
+  font-size: 85pt;
+  color: #278375;
+}
+
+.gray{
+  color: gray;
+}
+
+
+#loginDiv{
+  height: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.create-line{
+  padding-left: 20px;
+  /* необходим для формирования позиций линий */
+  position: relative;
+  /* весь блок будет занимать ширину по размеру контента в нём */
+  display: inline-block;
+}
+
+.create-line:before{
+  content: " ";
+  background: gray;
+  width: 600px;
+  height: 1px;
+  /* располагаем линию сверху от текста */
+  bottom: 10px;
+  right: 1px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+
+.create-line:after{ 
+  content: " ";
+  background: gray;
+  width: 600px;
+  height: 1px;
+  left: -1px;
+  /* размещаем линию снизу и справа*/
+  bottom: 10px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+
+.create-line-left-right{
+  padding-left: 20px;
+  /* необходим для формирования позиций линий */
+  position: relative;
+  /* весь блок будет занимать ширину по размеру контента в нём */
+  display: inline-block;
+}
+
+.create-line-left-right:before{ 
+  content: " ";
+  background: gray;
+  width: 100px;
+  height: 2px;
+  /* располагаем линию сверху от текста */
+  bottom: 10px;
+  right: 40px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+
+.create-line-left-right:after{ 
+  content: " ";
+  background: gray;
+  width: 100px;
+  height: 2px;
+  /* размещаем линию снизу и справа*/
+  bottom: 10px;
+  left: 60px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+
+#margin-top-bottom-20px{
+  margin: 20px;
+}
+
+.round{
+  border-radius: 50%;
+}
+
+.addImage{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  overflow: hidden;
+  top: 25%;
+  background-color: #339989FC;
+  height: 320px;
+  width: 320px;
+  color: white;
+  font-size: 15pt;
+  left: calc(60% - 160px);
+}
+
+#formDiv{
+  display: flex;
+  padding: 5px 10px;
+}
+
+#whoYouAre{
+  color: white;
+  font-size: 47pt;
+}
+
+#signupChooseWhoYouAre{
+  margin-top: 80px;
+  padding: 0 70px;
+}
+
+#transparentBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 340px;
+  height: 90px;
+  color: white;
+  border: 2px solid;
+  border-color: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+#transparentBtn:hover{
+  color: white;
+  border: 2px solid;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+#transparentBtn.big{
+  width: 300px;
+  height: 100px;
+}
+
+.height25{
+  height: 25%;
+}
+
+.marginTop40px{
+  margin-top: 40px;
+}
+
+.medicalCardHeader{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  /* height: 146.07px ; */
+  background-image: url("images/headerMedicalCard.png");
+  background-size: cover;
+
+  z-index: 999;
+}
+
+#titleBlack{
+  color: black;
+  text-transform: uppercase;
+}
+
+#doctorListHeaderDropdownContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 33%;
+}
+
+
+#doctorListPageDoctors{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px; 
+  row-gap: 80px;
+  padding: 0 100px;
+}
+
+#doctorsCount{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 8%;
+}
+
+#doctorListFilterSubContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#doctorListSortContainer{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 100px;
+  align-items: center;
+  user-select: none;
+
+  cursor: pointer;
+}
+
+/* Стили для выпадающего списка */
+#doctorListSortContainerDropdown {
+  display: none; /* Скрываем выпадающий список по умолчанию */
+  position: absolute; /* Позиционируем абсолютно */
+  top: 180px; /* Располагаем его над контейнером */
+  left: 385px; /* Выравниваем по левому краю */
+  width: 200px;
+  height: 100px;
+  background-color: white; /* Цвет фона */
+  padding: 10px;
+  border: 1px solid #ccc; /* Граница */
+  z-index: 999;
+  
+  border-radius: 10px; /* Поднимаем над остальными элементами */
+}
+
+#doctorListSortContainerDropdown button{
+  display: flex;
+  color: #000;
+  width: 100%;
+  border-radius: 5px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+
+#doctorListSortContainerDropdown button:hover{
+  background-color: #F5F4FB;
+}
+
+/* Показываем выпадающий список при наведении на заголовок */
+#doctorListSortContainerHeader:hover + #doctorListSortContainerDropdown {
+  display: block;
+}
+
+
+#doctorListFilterContainer{
+  width: 45%;
+}
+
+#doctorListHeaderDropdownContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#doctorListBodyFilterContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.pagination {
+  display: inline-block;
+  margin: 40px 0;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #108476;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+#dropdownImg{
+  width: 20px;
+  height: auto;
+}
+
+.menu{
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 1%;
+  background-color: white;
+  width: 300px;
+  height: 700px;
+  z-index: 999;
+  padding: 20px;
+
+  border-radius: 20px;
+}
+
+#menuProfileDiv{
+    margin: 10px 0;
+  padding: 10px;
+  line-height: 1;
+}
+
+#menuProfileDiv img{
+  margin-right: 15px;
+
+}
+
+.menuItem{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+  border-radius: 11px;
+
+
+  margin: 10px 0;
+  padding: 10px;
+  background-color: white;
+}
+
+.menuItem img{
+  margin-right: 15px;
+}
+
+
+.menuItem a{
+  color: #000;
+}
+
+.menuItem.active{
+  background-color: #6941C6;
+  color: white;
+}
+
+.sidebar {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 70px;
+  padding: 20px;
+  left: 0;
+  height: 100%;
+  width: 350px;
+  background-color: white;
+  z-index: 999;
+  /* Add the following properties for scrolling */
+  max-height: calc(100vh - 70px); /* Adjust based on your header height */
+  overflow-y: auto;
+}
+
+.sidebar .active{
+  display: flex;
+}
+
+
+
+.sidebarTitle{
+  font-size: 15pt;
+}
+
+.radioBtn{
+  width: 40px;
+}
+
+.radioBtn + label{
+  border: none !important;
+}
+
+.radioBtn:checked  {
+  background-color: white !important;
+  color: black !important;
+}
+
+.radioBtn:checked + label {
+  background-color: white !important;
+  color: black !important;
+}
+
+#sidebarSearchBtn{
+  background-color: #000;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  margin-top: 10px;
+}
+
+.doctorListHeader{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  background-size: cover;
+
+  border-bottom: 1px black solid;
+  z-index: 999;
+}
+
+.link{
+  color: white;
+  cursor: pointer;
+}
+
+.faded{
+  box-shadow:
+    inset 0 -3em 3em -10em rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.formTitle{
+  color: #014C35;
+}
+
+.active {
+  color: #339989; /* Green color for the active item */
+}
+
+.medicalCardSidebar{
+  position: fixed;
+  width: 40vh;
+}
+
+.medicalCardSidebar a h5{
+  margin: 20px 0px;
+}
+
+.medicalCardProfilePhoto{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: fixed;
+  left: 25vh;
+}
+
+.headerProfilePhoto{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mainSection{
+  position: relative;
+  left: 30vh;
+  z-index: 1;
+} 
+
+.left{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.right{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkbox-custom {
+  opacity: 0;
+  position: absolute;   
+}
+
+.checkbox-custom, .checkbox-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.checkbox-custom + .checkbox-custom-label:before {
+  content: '';
+  background: #fff;
+  border-radius: 50%  ;
+  border: 2px solid #ddd;
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  margin-right: 10px;
+  text-align: center;
+  box-sizing: unset;
+}
+
+.checkbox-custom:checked + .checkbox-custom-label:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 5px;
+  border: solid #014C35;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  border-radius: 0px;
+  margin: 0px 15px 5px 5px;
+}
+
+.twoInputs input:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.twoInputs input:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.rowReverse{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.marginRight15px{
+  margin-right: 15px;
+}
+
+.marginRight70px{
+  margin-right: 70px;
+}
+
+.inputPreLabel{
+  color: #339989;
+
+  border: 1px solid #339989;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0;
+  margin: 0;
+  margin-bottom: -9px;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 15px;
+}
+
+.twoInputs.inputTopNoRound  input:first-child{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.twoInputs.inputTopNoRound  input:last-child{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+#indexPage{
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("images/indexPage.png");
+  background-size: cover;
+}
+
+#header{
+  display: flex;
+  align-items:center ;
+  height: 50px;
+  background-color: #4F706A;
+}
+
+.profile{
+  display: flex;
+  flex-direction: row;
+}
+
+.profileName{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-height: 85px;
+  box-sizing: border-box;
+}
+
+.profileName h5{
+  color: white;
+  display: block;
+  max-height: 85px;
+  font-size: 9pt;
+  box-sizing: border-box;
+  margin: 0 20px;
+}
+
+.white{
+  color: white;
+}
+
+.logo.white{
+/* svg on an img tag */
+    -webkit-filter: invert(1); /* safari 6.0 - 9.0 */
+            filter: invert(1);
+}
+
+.gptIcon{
+  position: fixed;
+  z-index: 1;
+  bottom: 5vh;
+  right: 3vw;
+}
+
+.flex-end{
+  align-items: flex-end;
+}
+
+.diagnosticsButton{
+  display: flex;
+  width: 400px;
+  height: 110px;
+  align-items: center;
+  justify-content: center;
+  font-size: 40pt;
+  color: white;
+  border: 3px solid white;
+  border-radius: 30px;
+}
+
+.diagnosticsButton:hover{
+  border-color:  rgba(255, 255, 255, 0.644);
+  color: rgba(255, 255, 255, 0.644);
+  text-decoration: none;
+  transition: ease-in-out 0.2s;
+}
+
+#doctorCard{
+  width: 300px;
+}
+
+#doctorName{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#doctorSurname{
+  margin-top: 2px;
+  padding-top: 0;
+}
+
+#doctorCardPhoto{
+  z-index: 2;
+  position: relative;
+  top: -20px;
+  min-width: 250px !important;
+  min-height: 250px !important;
+  width: 250px !important;
+  height: 250px !important;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.aboutDoctor{
+  margin: 5px 0;
+}
+
+
+#doctorCardData{
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  top: -100px;
+  padding: 90px 20px 20px 20px;
+  width: 70%;
+  height: 270px;
+}
+
+#doctorCardData h4{
+  line-height: normal;
+}
+
+.contactsCard{
+  width: auto;
+  min-width: 150px;
+  margin-right: 50px;
+  padding: 0;
+}
+
+.contactsCard:last-child{
+  margin-right: 0;
+}
+
+.contactsCardData{
+  display: flex;
+  flex-direction: column;
+  max-height: 70px;
+  margin-left: 10px;
+}
+
+.contactsCardData h5{
+ font-weight: 100;
+ color: grey;
+}
+
+.contactsCardData h5:last-child{
+  color: #339989;
+}
+
+.container.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; 
+}
+
+.footerItem{
+  width: auto;
+  max-width: 220px;
+  font-size: 10pt;
+  box-sizing: border-box;
+}
+
+.footerItem:last-child{
+  width: auto;
+  max-width: 150px;
+  font-size: 10pt;
+  box-sizing: border-box;
+}
+
+.footerItem h4{
+  margin-bottom: 20px;
+  color: #014C35 !important;
+}
+
+.footerItem a{
+  margin-bottom: 10px;
+  color: #014C35 !important;
+}
+
+.footerItem h5{
+  margin-bottom: 10px;
+  font-size: 10pt;
+  color: #014C35 !important;
+}
+
+.calendarDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between !important;
+  width: 100%;
+  padding: 80px 150px;
+  justify-content: center;
+  background: url("images/calendarDivBG.png");
+  background-size: cover;
+
+}
+
+.assignAppointmentTimePicker{
+  height: 50px;
+  width: 120px;
+}
+
+.assignAppointmentTimePickerContainer{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.assignAppointmentTimePicker label, .assignAppointmentTimePicker input{
+  display: block;
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+  margin-left: 70px;
+}
+
+
+#appointementDoctorPhoto{
+  object-fit: cover;
+  min-width: 100px !important;
+  max-width: 100px !important;
+  height: 100px !important;
+  border-radius: 50%;
+}
+
+.appointementDoctorData{
+  margin-left: 30px;
+}
+
+#createAppointmentDiv{
+margin-left:20px;
+  width: 600px;
+  height: 630px;
+}
+
+.vanilla-calendar{
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 600px !important;
+  height: 630px !important;
+}
+
+.vanilla-calendar-day__btn{
+  min-height: 90px !important;
+  max-width: 70px !important;
+}
+
+.vanilla-calendar-months__month{
+  height: 150px !important;
+  max-width: 110px !important;
+}
+
+.vanilla-calendar-years__year{
+  height: 150px !important;
+  max-width: 110px !important;
+}
+
+.vanilla-calendar-day__btn.vanilla-calendar-day__btn_selected{
+  background-color: #047857 !important;
+}
+
+.vanilla-calendar-years__year.vanilla-calendar-years__year_selected{
+  background-color: #047857 !important;
+}
+
+.vanilla-calendar-months__month.vanilla-calendar-months__month_selected{
+  background-color: #047857 !important;
+}
+
+/* CHAT */
+/*-------------------- Chat --------------------*/
+.chat {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 350px;
+  height: 80vh;
+  max-height: 500px;
+  z-index: 2;
+  overflow: hidden;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, .5);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+/*-------------------- Chat Title --------------------*/
+.chat-title {
+  display: flex;
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 10px 10px 50px;
+}
+.chat-title h1, .chat-title h2 {
+  font-weight: normal;
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
+.chat-title h2 {
+  color: rgba(255, 255, 255, .5);
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.chat-title .avatar {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 9px;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+}
+.chat-title .avatar img {
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/*-------------------- Messages --------------------*/
+.messages {
+  flex: 1 1 auto;
+  color: rgba(255, 255, 255, .5);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.messages .messages-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.messages .message {
+  clear: both;
+  float: left;
+  padding: 6px 10px 7px;
+  border-radius: 10px 10px 10px 0;
+  background: rgba(0, 0, 0, .3);
+  margin: 8px 0;
+  font-size: 11px;
+  line-height: 1.4;
+  margin-left: 35px;
+  position: relative;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+.messages .message .timestamp {
+  position: absolute;
+  bottom: -15px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, .3);
+}
+.messages .message::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  border-top: 6px solid rgba(0, 0, 0, .3);
+  left: 0;
+  border-right: 7px solid transparent;
+}
+.messages .message .avatar {
+  position: absolute;
+  z-index: 1;
+  bottom: -15px;
+  left: -35px;
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+}
+.messages .message .avatar img {
+  width: 100%;
+  height: auto;
+}
+.messages .message.message-personal {
+  float: right;
+  color: #fff;
+  text-align: right;
+  background: linear-gradient(120deg, #248a52, #257287);
+  border-radius: 10px 10px 0 10px;
+}
+.messages .message.message-personal::before {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 5px solid transparent;
+  border-top: 4px solid #257287;
+  bottom: -4px;
+}
+.messages .message:last-child {
+  margin-bottom: 30px;
+}
+.messages .message.new {
+  left: -20px;
+  animation: bounce 500ms linear both;
+}
+.messages .message.loading::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  z-index: 2;
+  margin-top: 4px;
+  animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+  border: none;
+  animation-delay: 0.15s;
+}
+.messages .message.loading span {
+  display: block;
+  font-size: 0;
+  width: 20px;
+  height: 10px;
+  position: relative;
+}
+.messages .message.loading span::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  z-index: 2;
+  margin-top: 4px;
+  animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+  margin-left: -7px;
+}
+.messages .message.loading span::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  z-index: 2;
+  margin-top: 4px;
+  animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+  margin-left: 7px;
+  animation-delay: 0.3s;
+}
+/*-------------------- Message Box --------------------*/
+.message-box {
+  flex: 0 1 40px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  position: relative;
+}
+.message-box .message-input {
+  background: none;
+  border: none;
+  outline: none !important;
+  resize: none;
+  color: rgba(255, 255, 255, .7);
+  font-size: 11px;
+  height: 25px;
+  margin: 0;
+  padding-right: 20px;
+  width: 250px;
+}
+.message-box textarea:focus:-webkit-placeholder {
+  color: transparent;
+}
+.message-box .message-submit {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  right: 10px;
+  color: #fff;
+  border: none;
+  background: #248a52;
+  font-size: 10px;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 14px;
+  outline: none !important;
+  transition: background 0.2s ease;
+}
+
+.message-box .message-submit:hover {
+  background: #1d7745;
+}
+
+.mCSB_scrollTools {
+  margin: 1px -3px 1px 0;
+  opacity: 0;
+}
+.mCSB_inside > .mCSB_container {
+  margin-right: 0px;
+  padding: 0 10px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+
+/*--------------------
+Bounce
+--------------------*/
+@keyframes bounce { 
+  0% { transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  4.7% { transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  9.41% { transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  14.11% { transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  18.72% { transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  24.32% { transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  29.93% { transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  35.54% { transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  41.04% { transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  52.15% { transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  63.26% { transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  85.49% { transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
+}
+
+.chat {
+  display: none;
+}
+
+.fixedButton{
+  background: transparent;
+  border: none;
+}
+
+#closeChatBtn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  right: 9px;
+}
+
+#splide-container {
+  max-width: 100vw !important;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.splide__track {
+  width: auto;
+  transform: translateX(0);
+  overflow: initial !important;
+}
+
+.splide__list {
+  position: relative;
+  left: -35%;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.splide__slide {
+  flex: 0 0 15%;
+  width: 100%; /* Ensure each slide takes the full width */
+  width: calc(16%);
+  box-sizing: border-box;
+}
+
+
+.slider{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#splide-container {
+  height: 500px;
+  overflow-y: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+#specialtySelectionSelector::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#specialtySelectionSelector{
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; 
+  /* height: 500px; */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+#doctorList{
+  height: 500px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+#goBackBtn{
+  position: absolute;
+  width: 70px;
+  height: 70px;
+}
+
+#goBackFixedBtn{
+  position: fixed;
+  top: 5vh;
+  left: 5vh;
+  width: 70px;
+  height: 70px;
+}
+
+#apointementHeader{
+  display: flex;
+  align-items: center;
+}
+
+.search-container {
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-container input{
+  border:   #7C59CD solid 1px;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #0b7dda;
+}
+
+@media screen and (max-width: 1200px) {
+  .calendarDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #diagnosticsButtonDiv{
+    align-items: center;
+  }
+
+
+  .diagnosticsButton{
+
+    width: 350px;
+    padding: 0px;
+  }
+
+  #contacts{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
+  }
+  
+  #footerItems{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
+  }
+
+  #indexPage{
+    padding: auto;
+  }
+
+  #headerLogo{
+    display: none;
+  }
+
+  .indexDoctors{
+    padding: 0px 10px !important;
+  }
+
+  
+.create-line:before{
+  content: " ";
+  background: gray;
+  width: 45vw;
+  height: 1px;
+  /* располагаем линию сверху от текста */
+  bottom: 10px;
+  right: 1px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+
+.create-line:after{ 
+  content: " ";
+  background: gray;
+  width: 45vw;
+  height: 1px;
+  left: -1px;
+  /* размещаем линию снизу и справа*/
+  bottom: 10px;
+  /* включаем абсолютное позиционирование относительно блока с relative */
+  position: absolute;
+}
+}
+
+
+#doctorListHeaderProfile{
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 1100px) {
+  #loginDiv{
+    width: 80% !important;
+    justify-content: center;
+  }
+  
+  #loginTitle{
+    font-size: 70pt;
+  }
+
+  .small{
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .button{
+    width: 150px;
+  }
+
+  .big{
+    width: 98%;
+  }
+
+  .profileName{
+    display: none;
+  }
+
+  .container footer{
+    padding: 0 20px;
+  }
+
+  #signupForm{
+    width: 94%;
+    margin-left: 3%;
+  }
+
+  .medicalCardSidebar{
+    display: none;
+  }
+
+  .mainSection{
+    left: 0;
+  }
+
+  #loginTitle{
+    font-size: 30pt;
+  }
+
+  .padding80px{
+    padding: 15px;
+  } 
+
+
+  .leftW{
+    margin-left: 0% !important;
+  }
+
+  .medium{
+    width: 100%;
+  }
+
+  .button{
+    font-size: 9pt;
+  }
+
+  #addImageButton {
+    position: relative;
+    top: 2vh;
+    left: 3vw;
+  }
+
+  #whoYouAre{
+    font-size: 18pt;
+  }
+
+  #signupChooseWhoYouAre{
+    display: block;
+  }
+
+  #transparentBtn{
+    margin: 10px 0px;
+  }
+
+.vanilla-calendar{
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 95vw !important;
+  height: 400px !important;
+}
+
+.small{
+  width: 95% !important;
+}
+
+.vanilla-calendar-day__btn{
+  min-height: 50px !important;
+  max-width: 60px !important;
+}
+
+.vanilla-calendar-months__month{
+  height: 70px !important;
+  max-width: 60px !important;
+}
+
+.vanilla-calendar-years__year{
+  height: 70px !important;
+  max-width: 60px !important;
+}
+
+.vanilla-calendar-day__btn.vanilla-calendar-day__btn_selected{
+  background-color: #047857 !important;
+}
+
+.vanilla-calendar-years__year.vanilla-calendar-years__year_selected{
+  background-color: #047857 !important;
+}
+
+.vanilla-calendar-months__month.vanilla-calendar-months__month_selected{
+  background-color: #047857 !important;
+}
+
+
+
+  #contacts{
+    display: block;
+  }
+
+  .padding100pxW{
+    padding: 0 15px;
+  }
+
+  #footerItems{
+    display: block;
+  }
+
+  #specialtySelectionSelector{
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1{
+    font-size: 48pt;
+  }
+
+  h2{
+    font-size: 40pt;
+  }
+
+  h3{
+    font-size: 30pt;
+  }
+  
+  h3{
+    font-size: 20pt;
+  }
+
+  h4{
+    font-size: 15pt;
+  }
+
+  h5{
+    font-size: 12pt;
+  }
+
+  h6{
+    font-size: 10pt;
+  }
+
+  #goBackBtn{
+    position: relative;
+  }
+
+  #createAppointmentDiv{
+      padding: 0 20px;
+      display: flex;
+      width: 100vw !important;
+  }
+
+  #doctorDetails {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Две колонки: первая для фотографии, вторая для имени и фамилии */
+    column-gap: 20px; /* Расстояние между колонками */
+    align-items: center; /* Выравнивание элементов по центру по вертикали */
+  }
+
+  #appointementDoctorPhoto {
+      max-width: 100px; /* Ширина фотографии (можно настроить по вашему вкусу) */
+  }
+
+  .assignAppointmentTimePicker{
+    width: 100px !important;
+  }
+
+  #createAppointmentDiv h2{
+    font-size: 30pt;
+  }
+
+  .splide__list {
+    position: relative;
+    left: 0%;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  #signupDiv{
+    height: max-content;
+  }
+
+  #headerMedicalCardAppointment{
+    display: none;
+  }
+
+  
+  #headerMedicalCardAppointment{
+    display: none;
+  }
+  
+  #headerMedicalCardSpecialists{
+    display: none;
+  }
+
+  .medicalCardProfilePhoto{
+    display: none;
+  }
+}

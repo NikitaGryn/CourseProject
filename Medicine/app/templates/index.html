@@ -1,0 +1,879 @@
+
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/calendar/vanilla-calendar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/css/splide.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/modal.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/js/splide.min.js"></script>
+    <script src="static/calendar/vanilla-calendar.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/changeChatIconOnScroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/calendarInit.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/getCalendarValue.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/sliderSettings.js') }}"></script>
+<!--    <script src="{{ url_for('static', filename='scripts/define_disease.js') }}"></script>-->
+    <script src="{{ url_for('static', filename='scripts/modals.js') }}"></script>
+
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style/header2.css') }}">-->
+    <script>
+        window.addEventListener('scroll', function () {
+            var gptIcon = document.getElementById('gptIcon');
+            var scrollPosition = window.scrollY;
+
+            // Use className instead of class
+            // Also, set the correct classList values
+            if (scrollPosition > 70) {
+                gptIcon.classList.remove('white');
+            } else {
+                gptIcon.classList.add('white');
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const calendar = new VanillaCalendar('#calendar');
+            calendar.init();
+            document.getElementById("specialtySelection").classList.add("hidden");
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Добавляем обработчик событий для родительского элемента, используя делегирование
+            document.addEventListener('click', function(event) {
+                // Проверяем, была ли нажата кнопка с классом vanilla-calendar-day__btn
+                if (event.target.classList.contains('vanilla-calendar-day__btn')) {
+                    // Получаем значение data-calendar-day
+                    var selectedDate = event.target.getAttribute('data-calendar-day');
+
+                    // Выводим значение в консоль
+                    // console.log("Выбранная дата:", selectedDate);
+
+                    // Далее, вы можете использовать значение selectedDate и подставить его в нужное место в форме
+                    // Например, для подстановки в поле с именем "date":
+                    document.querySelector('input[name="date"]').value = selectedDate;
+                    goBack();
+                    document.getElementById("specialtySelection").classList.remove("hidden");
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          new Splide('#splide-container', {
+            type       : 'carousel',
+            perPage    : 1,
+            pagination : false,
+            focus      : 'center',
+            breakpoints: {
+              600: {
+                perPage: 1,
+              },
+              800: {
+                perPage: 1,
+              },
+            },
+            drag: false,
+          }).mount();
+        });
+      </script>
+
+
+
+    <title>Index</title>
+</head>
+<body class="container">
+    <div class="container padding100pxW" id="indexPage">
+        <div class="container fullHeight centerH flex-end padding100pxW" id="diagnosticsButtonDiv">
+            <a id="diagnosticsButton" onclick="showModal(1)">Диагностика</a>
+        </div>
+    </div>
+    <div class="container padding100pxW indexDoctors">
+        <h3 class="regular marginTop40px" style="text-decoration: underline;">Наши врачи</h3>
+
+        <div class="container slider marginTop80px row center">
+            <div class="splide" id="splide-container">
+                <div class="splide__track">
+                    <ul class="splide__list">
+
+                        {% for doctor in doctors_slider %}
+                        <li class="splide__slide">
+                            <div class="container small centerItemsW marginRight70px" id="doctorCard">
+                                <img src="{{ url_for('uploaded_file', filename=doctor.photo_path) }}" id="doctorCardPhoto">
+                                <div class="container medium faded"  id="doctorCardData">
+                                    <h5 class="aboutDoctor thin" id="doctorPosition">{{ doctor.practice_profile }}</h5>
+                                    <h4 class="aboutDoctor" id="doctorName">{{ doctor.firstname }}</h4>
+                                    <h4 class="aboutDoctor" id="doctorSurname">{{ doctor.surname }}</h4>
+                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">{{ doctor.education }}</h5>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+
+<!--                        <li class="splide__slide">-->
+<!--                            <div class="container small centerItemsW marginRight70px" id="doctorCard">-->
+<!--                                <img src="static/images/doctorCardPhoto.jpg" id="doctorCardPhoto">-->
+<!--                                <div class="container medium faded"  id="doctorCardData">-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorPosition">Нарколог</h5>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorName">Олег</h4>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorSurname">Олегов</h4>-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">Кандидат наук</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                        <li class="splide__slide">-->
+<!--                            <div class="container small centerItemsW marginRight70px" id="doctorCard">-->
+<!--                                <img src="static/images/doctorCardPhoto.jpg" id="doctorCardPhoto">-->
+<!--                                <div class="container medium faded"  id="doctorCardData">-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorPosition">Нарколог</h5>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorName">Олег</h4>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorSurname">Олегов</h4>-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">Кандидат наук</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                        <li class="splide__slide">-->
+<!--                            <div class="container small centerItemsW marginRight70px" id="doctorCard">-->
+<!--                                <img src="static/images/doctorCardPhoto.jpg" id="doctorCardPhoto">-->
+<!--                                <div class="container medium faded"  id="doctorCardData">-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorPosition">Нарколог</h5>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorName">Олег</h4>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorSurname">Олегов</h4>-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">Кандидат наук</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                        <li class="splide__slide">-->
+<!--                            <div class="container small centerItemsW marginRight70px" id="doctorCard">-->
+<!--                                <img src="static/images/doctorCardPhoto.jpg" id="doctorCardPhoto">-->
+<!--                                <div class="container medium faded"  id="doctorCardData">-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorPosition">Нарколог</h5>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorName">Олег</h4>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorSurname">Олегов</h4>-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">Кандидат наук</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                                                <li class="splide__slide">-->
+<!--                            <div class="container small centerItemsW marginRight70px" id="doctorCard">-->
+<!--                                <img src="static/images/doctorCardPhoto.jpg" id="doctorCardPhoto">-->
+<!--                                <div class="container medium faded"  id="doctorCardData">-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorPosition">Нарколог</h5>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorName">Олег</h4>-->
+<!--                                    <h4 class="aboutDoctor" id="doctorSurname">Олегов</h4>-->
+<!--                                    <h5 class="aboutDoctor thin" id="doctorScientificDegree">Кандидат наук</h5>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container center" style="padding-bottom:30px;">
+            <a href="/doctor_list" class="button" id="allDoctorsBtn">Все врачи</a>
+        </div>
+    </div>
+
+
+
+    <div class="container big calendarDiv">
+        <div id="calendar"></div>
+        <div id="createAppointmenDiv" action="/assign-appointment" method="POST" class="container small" style="
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius:10px;
+    width:700px;
+    background-color: rgba(255, 255, 255, 0.3); /* Полупрозрачный черный фон */
+">
+            <div class="container row" id="apointementHeader">
+                <img src="../static/images/backBtn.png" class="logo white hidden" onclick="goBack()" id="goBackBtn">
+                <h2 class="container center white">Записаться</h2>
+            </div>
+
+            <!-- Выбор направления врача -->
+            <div class="container center column spacebtw" id="specialtySelection">
+                <h4 class="white">Выберите направление врача</h4>
+                <div id="specialtySelectionSelector">
+                    <!--
+                    <button class="button" type="button" onclick="selectSpecialty('narcology')">Нарколог</button>
+                    <button class="button" type="button" onclick="selectSpecialty('urologist')">Уролог</button>
+                    <button class="button" type="button" onclick="selectSpecialty('protologist')">Проктолог</button>
+                    -->
+
+                </div>
+            </div>
+
+            <!-- Список врачей по выбранному направлению -->
+            <div class="container hidden" id="doctorList">
+                <h4 class="white">Выберите врача</h4>
+                <div id="doctorLinks" class="container">
+                    <!-- Ссылки на врачей будут добавлены динамически с помощью JavaScript -->
+                </div>
+            </div>
+
+            <form id="assignAppointment" action="/assign-appointment" method="POST">
+
+                {{ form.csrf_token }}
+                {{ form.date(class="hidden", required="required", onchange="goBack()") }}
+                <div class="container row hidden" id="doctorDetails">
+                    <div id="appointementDoctorPhotoApp">
+                        <img src="../static/images/doctorCardPhoto.jpg">
+                    </div>
+                    <div>
+                        <h4 class="appointementDoctorData white thin" id="doctorFirstnameAppointement">Имя</h4>
+                        <h4 class="appointementDoctorData white thin" id="doctorSurnameAppointement">Фамилия</h4>
+                    </div>
+
+                    <!-- Выбор времени и дополнительные элементы -->
+                    <div class="container createAppointmentTimePickerContainer hidden" id="timePickerContainer">
+                        <style>
+                            .createAppointmentTimePicker option[value=""] {
+                                display: none;
+                            }
+                        </style>
+
+                        {{ form.time(class="createAppointmentTimePicker", id="appt", required="required", onchange="addIcon()") }}
+                    </div>
+
+                    <!-- Детали записи -->
+                </div>
+                {{ form.doctor_id(class="hidden", id="appointementDoctorId") }}
+                {{ form.appointment_details(class="hidden", placeholder="Детали записи", id="appointementTextArea") }}
+                {{ form.submit(class="button hidden", id="submitAppointment") }}
+            </form>
+        </div>
+    </div>
+
+    <div id="modal1" class="modal">
+  <div class="modal-header">
+    <h2 class="modal-title">Выберите симптомы</h2>
+    <span class="close" onclick="hideModal(1)">&times;</span>
+  </div>
+  <div class="modal-body">
+    <div class="general-symptoms-title">Общие симптомы</div>
+
+    <!-- Блок 1 с симптомами -->
+    <div class="symptoms-block symptoms-block-1">
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_fatigue">
+        <label for="concept_fatigue">Усталость</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_sleep_disorders">
+        <label for="concept_sleep_disorders">Сонливость</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_fever">
+        <label for="concept_fever">Повышенная температура</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_lack_of_appetite">
+        <label for="concept_lack_of_appetite">Отсутствие аппетита</label>
+      </div>
+    </div>
+
+    <!-- Блок 2 с симптомами -->
+    <div class="symptoms-block symptoms-block-2">
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_thirst">
+        <label for="concept_thirst">Жажда</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_head_noise">
+        <label for="concept_head_noise">Шум в голове</label>
+      </div>
+      <!-- <div class="symptom-item">
+        <input type="checkbox" id="symptom7">
+        <label for="symptom7">Сухость кожи</label>
+      </div> -->
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_lymph_node_enlargement">
+        <label for="concept_lymph_node_enlargement">Увеличенные лимфоузлы</label>
+      </div>
+    </div>
+
+    <!-- Блок 3 с симптомами -->
+    <div class="symptoms-block symptoms-block-3">
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_cough">
+        <label for="concept_cough">Кашель</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_nausea">
+        <label for="concept_nausea">Тошнота</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_photophobia">
+        <label for="concept_photophobia">Чувствительность к свету</label>
+      </div>
+      <div class="symptom-item">
+        <input type="checkbox" id="concept_hoarseness">
+        <label for="concept_hoarseness">Осиплость</label>
+      </div>
+    </div>
+    <!-- Локальные симптомы -->
+    <div class="local-symptoms-title">Локальные симптомы</div>
+
+    <!-- Блок 1 локальных симптомов -->
+    <div class="local-symptoms-block local-symptoms-block-1">
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_lacrimal_gland_pain">
+        <label for="concept_lacrimal_gland_pain">Боль в глазу</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_sore_throat">
+        <label for="concept_sore_throat">Боль в горле</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_chest_pain">
+        <label for="concept_chest_pain">Боль в груди</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="local-symptom4">
+        <label for="local-symptom4">Боль в спине</label>
+      </div>
+    </div>
+    <!-- Блок 2 локальных симптомов -->
+    <div class="local-symptoms-block local-symptoms-block-2">
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_navel_pain">
+        <label for="concept_navel_pain">Боль внизу живота</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_abdominal_discomfort">
+        <label for="concept_abdominal_discomfort">Дискомфорт в животе</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="local-symptom7">
+        <label for="local-symptom7">Боль в колене</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="local-symptom8">
+        <label for="local-symptom8">Боль в ступне</label>
+      </div>
+    </div>
+
+    <!-- Блок 3 локальных симптомов -->
+    <div class="local-symptoms-block local-symptoms-block-3">
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_itching">
+        <label for="concept_itching">Зуд кожи головы</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="local-symptom10">
+        <label for="local-symptom10">Онемение пальцев</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="concept_cramping">
+        <label for="concept_cramping">Судороги икр</label>
+      </div>
+      <div class="local-symptom-item">
+        <input type="checkbox" id="local-symptom12">
+        <label for="local-symptom12">Покалывание в руках</label>
+      </div>
+    </div>
+
+    <div class="save-checkbox">
+      <input type="checkbox" id="dont-save">
+      <label for="dont-save">Не сохранять результат диагностики в личный профиль</label>
+    </div>
+
+    <button class="main-button" onclick="submitSymptoms()">Провести диагностику</button>
+  </div>
+</div>
+
+<div id="modal2" class="modal">
+  <div class="modal-header">
+    <h2 class="modal-title">Результат диагностики</h2>
+    <span class="close" onclick="hideModal(2)">&times;</span>
+  </div>
+  <div class="modal-body">
+    <div class="diagnostic-result">
+      По результатам проведенной у Вас диагностики Медицинский ассистент определил возможные предполагаемые заболевания и их вероятность:
+    </div>
+
+    <div class="disclaimer">
+      Результаты данной диагностики не являются достоверным медицинским заключением, для этого необходимо обратиться к врачу в медицинском учреждении.
+    </div>
+
+    <ul class="diseases-list">
+
+    </ul>
+
+    <!-- <button id="appointment" class="book-appointment" onclick="alert('Запись к врачу'); hideModal(2)">
+      Записаться к врачу
+    </button> -->
+  </div>
+    <div id="overlay" class="overlay" onclick="hideAllModals()"></div>
+</div>
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Создаем новый объект XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Открываем новый запрос GET к указанному URL-адресу
+            xhr.open("GET", "/practice-profiles", true);
+
+            // Отправляем запрос
+            xhr.send();
+
+            // Устанавливаем обработчик события "load" для запроса
+            xhr.onload = function() {
+                // Парсим полученный ответ в формате JSON
+                var specialties = JSON.parse(xhr.responseText);
+
+                // Получаем элемент specialtySelectionSelector
+                var specialtySelection = document.getElementById("specialtySelectionSelector");
+
+                // Перебираем каждую специальность и создаем кнопку для нее
+                specialties.forEach(function(specialty) {
+                    var button = document.createElement("button");
+                    button.classList.add("button");
+                    button.setAttribute("type", "button");
+                    button.setAttribute("onclick", "selectSpecialty('" + specialty + "')");
+                    button.textContent = specialty;
+                    specialtySelection.appendChild(button);
+                });
+            };
+        });
+    </script>
+
+    <script>
+        function selectSpecialty(specialty) {
+            // Отправляем AJAX-запрос для получения списка врачей по выбранному направлению
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/doctors-by-specialty?specialty=" + specialty, true);
+            xhr.send();
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var doctors = JSON.parse(xhr.responseText);
+                    console.log(doctors);
+
+                    // Заполняем список врачей
+                    var doctorLinks = $("#doctorLinks");
+                    doctorLinks.empty();
+
+                    doctors.forEach(function (doctor) {
+                        var doctorLink = $("<a>", {
+                            id: specialty, // Use the specialty as the ID
+                            class: "marginTop20px",
+                            click: function () {
+                                showDoctorDetails(doctor);
+                            }
+                        });
+
+                        // Создаем контейнер с изображением, именем и фамилией
+                        var container = $("<div>", {
+                            class: "container row"
+                        });
+
+                        container.append($("<img>", {
+                            src: "/uploads/" + doctor.photo_path,
+                            id: "appointementDoctorPhoto"
+                        }));
+
+                        var detailsContainer = $("<div>");
+                        detailsContainer.append($("<h4>", {
+                            class: "appointementDoctorData white thin",
+                            id: "doctorName",
+                            text: doctor.firstname
+                        }));
+                        detailsContainer.append($("<h4>", {
+                            class: "appointementDoctorData white thin",
+                            id: "doctorSurname",
+                            text: doctor.surname
+                        }));
+
+                        container.append(detailsContainer);
+                        doctorLink.append(container);
+                        doctorLinks.append(doctorLink);
+                    });
+
+                    // Переключаем видимость элементов
+                    $("#specialtySelection").addClass("hidden");
+                    $("#doctorList").removeClass("hidden");
+                    $("#goBackBtn").removeClass("hidden");
+                } else {
+                    console.error("Ошибка при получении списка врачей");
+                }
+            };
+        }
+
+        function showDoctorDetails(doctor) {
+            // Показываем подробную информацию о враче
+            document.getElementById("doctorDetails").classList.remove("hidden");
+            document.getElementById("doctorFirstnameAppointement").textContent = doctor.firstname;
+            document.getElementById("doctorSurnameAppointement").textContent = doctor.surname;
+            console.log(doctor.photo_path);
+
+            // Создаем элемент изображения
+            var img = document.createElement("img");
+            img.src = "/uploads/" + doctor.photo_path;
+            img.id = "appointementDoctorPhoto";
+
+            // Очищаем содержимое контейнера перед добавлением нового изображения
+            document.getElementById("appointementDoctorPhotoApp").innerHTML = '';
+
+            // Добавляем изображение в контейнер
+            document.getElementById("appointementDoctorPhotoApp").appendChild(img);
+
+            // Дополнительный код для отображения деталей врача
+
+            // Скрываем список врачей
+            document.getElementById("doctorList").classList.add("hidden");
+            document.getElementById("timePickerContainer").classList.remove("hidden");
+            document.getElementById("appointementTextArea").classList.remove("hidden");
+            document.getElementById("submitAppointment").classList.remove("hidden");
+            document.getElementById("goBackBtn").classList.remove("hidden");
+
+            document.getElementById("appointementTextArea").value = "";
+            var form = document.getElementById('assignAppointment');
+            var dateInput = form.querySelector('input[name="date"]');
+            console.log(form);
+            console.log(dateInput);
+            console.log(dateInput.value);
+            console.log(doctor);
+            console.log(doctor.id);
+
+            // Создаем основной контейнер для карты и адреса
+            var mapAndAddressContainer = document.createElement("div");
+            mapAndAddressContainer.style.display = "flex";
+            mapAndAddressContainer.style.flexDirection = "row";
+            mapAndAddressContainer.style.alignItems = "flex-start";
+            mapAndAddressContainer.style.gap = "20px";
+            mapAndAddressContainer.style.width = "100%";
+            mapAndAddressContainer.style.marginTop = "15px";
+
+            // Контейнер для карты
+            var mapContainer = document.createElement("div");
+            mapContainer.style.position = "relative";
+            mapContainer.style.overflow = "hidden";
+            mapContainer.style.flexShrink = "0"; // Чтобы карта не сжималась
+
+            // Создаем iframe с картой
+            var iframe = document.createElement("iframe");
+            iframe.src = `https://yandex.by/map-widget/v1/?ll=${doctor.longitude}%2C${doctor.latitude}&pt=${doctor.longitude}%2C${doctor.latitude}~v1~om%3A1&z=16`;
+            iframe.width = "300px";
+            iframe.height = "300px";
+            iframe.allowFullscreen = "true";
+            iframe.style.border = "none";
+            iframe.style.borderRadius = "20px";
+
+            mapContainer.appendChild(iframe);
+
+            // Контейнер для адреса и дополнительной информации
+            var addressContainer = document.createElement("div");
+            addressContainer.style.flex = "1";
+            addressContainer.style.color = "white";
+
+            // Заголовок
+            var addressTitle = document.createElement("h4");
+            addressTitle.textContent = "Адрес клиники:";
+            addressTitle.style.marginBottom = "10px";
+            addressTitle.style.fontWeight = "bold";
+
+            // Сам адрес
+            var addressElement = document.createElement("p");
+            addressElement.textContent = doctor.address;
+            addressElement.style.marginBottom = "15px";
+
+            // Дополнительная информация (если нужно)
+            var workHours = document.createElement("p");
+            workHours.textContent = "Часы работы: пн-пт 8:00-22:00, сб-вс 9:00-20:00";
+            workHours.style.marginBottom = "15px";
+
+            var phone = document.createElement("p");
+            phone.textContent = `Телефон: ${doctor.phone}`;
+
+            // Собираем контейнер адреса
+            addressContainer.appendChild(addressTitle);
+            addressContainer.appendChild(addressElement);
+            // addressContainer.appendChild(workHours);
+            addressContainer.appendChild(phone);
+
+            // Собираем основной контейнер
+            mapAndAddressContainer.appendChild(mapContainer);
+            mapAndAddressContainer.appendChild(addressContainer);
+
+            // Вставляем карту и адрес после поля "Детали записи"
+            var detailsField = document.getElementById("appointementTextArea");
+            detailsField.parentNode.insertBefore(mapAndAddressContainer, detailsField.nextSibling);
+
+            // Делаем запрос для получения списка занятого времени
+            fetch('/appointments/available-doctor-time?doctor_id=' + doctor.id + '&date=' + dateInput.value)
+                .then(response => {
+                    if (!response.ok) {
+                        response.json().then(errors => {
+                            let errorMessage = '';
+                            for (const field in errors) {
+                                errorMessage += `${field}: ${errors[field]}\n`;
+                            }
+                            alert('Произошла ошибка\n' + errorMessage);
+                            goBack();
+                            throw new Error('Network response was not ok' + errorMessage);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Обрабатываем полученные данные
+                    console.log(data);
+
+                    // Получаем ссылку на элемент <select> по его идентификатору
+                    var selectElement = document.getElementById('appt');
+                    selectElement.innerHTML = '';
+                    selectElement.disabled = true;
+
+                    // Получаем данные о назначениях
+                    var appointmentsData = data;
+
+                    var doctorIdField = document.getElementById('appointementDoctorId');
+                    doctorIdField.value = doctor.id;
+
+                    // Извлекаем из данных время назначения и добавляем в <select>
+                    appointmentsData.forEach(function(appointment) {
+                        var appointmentDateTime = new Date(appointment);
+                        var appointmentTime = appointmentDateTime.getUTCHours().toString().padStart(2, '0') + ':' + appointmentDateTime.getUTCMinutes().toString().padStart(2, '0');
+                        selectElement.disabled = false;
+                        // Создаем новый элемент <option>
+                        var optionElement = document.createElement('option');
+                        optionElement.value = appointmentTime + ':00';
+                        console.log(optionElement.value);
+                        optionElement.textContent = appointmentTime;
+                        // Добавляем новый элемент <option> в <select>
+                        selectElement.appendChild(optionElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        function goBack() {
+            // Remove the map container if it exists
+            var mapContainer = document.querySelector('div[style*="flex-direction: row"]');
+            if (mapContainer) {
+                mapContainer.remove();
+            }
+
+            // Hide all appointment-related elements
+            $("#specialtySelection").removeClass("hidden");
+            $("#doctorDetails").addClass("hidden");
+            $("#doctorList").addClass("hidden");
+            $("#timePickerContainer").addClass("hidden");
+            $("#submitAppointment").addClass("hidden");
+            $("#appointementTextArea").addClass("hidden");
+            $("#goBackBtn").addClass("hidden");
+        }
+    </script>
+
+    <script>
+        document.getElementById("assignAppointment").addEventListener("submit", function(event){
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            // Отправляем запрос на сервер
+            var formData = new FormData(this);
+            // Итерируем по парам ключ-значение FormData и выводим их в консоль
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+            fetch('/assign-appointment', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Вы успешно записаны на прием!'); // Показываем сообщение об успехе
+                    goBack();
+                } else {
+                    response.json().then(errors => {
+                        let errorMessage = '';
+                        for (const field in errors) {
+                            errorMessage += `${field}: ${errors[field]}\n`;
+                        }
+                        alert('Произошла ошибка при записи на прием:\n' + errorMessage + 'Возможно стоит попробовать позже.');
+                        goBack();
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Произошла ошибка:', error);
+            });
+        });
+
+        function submitSymptoms() {
+            // Collect checked symptoms
+            const generalSymptoms = [];
+            const localSymptoms = [];
+            
+            // Get general symptoms
+            document.querySelectorAll('.symptoms-block input[type="checkbox"]:checked').forEach(checkbox => {
+                generalSymptoms.push(checkbox.id);
+            });
+            
+            // Get local symptoms
+            document.querySelectorAll('.local-symptoms-block input[type="checkbox"]:checked').forEach(checkbox => {
+                localSymptoms.push(checkbox.id);
+            });
+            
+            // Get "don't save" preference
+            const dontSave = document.getElementById('dont-save').checked;
+            
+            // Make API request
+            fetch('/diagnose_symptoms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    general_symptoms: generalSymptoms,
+                    local_symptoms: localSymptoms,
+                    dont_save: dontSave
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Clear previous results
+                    const diseasesList = document.querySelector('.diseases-list');
+                    diseasesList.innerHTML = '';
+                    
+                    // Add new results dynamically
+                    data.results.forEach((result, index) => {
+                        const diseaseItem = document.createElement('li');
+                        diseaseItem.className = 'disease-item';
+                        
+                        diseaseItem.innerHTML = `
+                            <span class="disease-name">Возможное заболевание -</span>
+                            <span class="disease-value" id="disease${index+1}">${result.disease}</span><br>
+                            <span class="disease-name">Вероятность -</span>
+                            <span class="disease-value" id="probability${index+1}">${result.probability}</span><br>
+                            <span class="disease-name">Рекомендуемый специалист -</span>
+                            <span class="disease-value" id="specialist${index+1}">${result.specialist}</span>
+                        `;
+                        
+                        diseasesList.appendChild(diseaseItem);
+                    });
+                    
+                    // Show the results modal
+                    hideModal(1);
+                    showModal(2);
+                } else {
+                    alert('Ошибка при диагностике: ' + (data.message || 'Неизвестная ошибка'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Произошла ошибка при отправке симптомов');
+            });
+        }
+    </script>
+
+
+
+     <!-- <script>
+        // Пример массива с занятыми временными интервалами
+        var busyTimes = ["09:15", "10:30", "14:45"];
+
+        // Получаем элемент select
+        var select = document.getElementById('appt');
+
+        // Устанавливаем обработчик события change
+        select.addEventListener('change', function () {
+            // Проверяем, выбрано ли занятое время
+            if (busyTimes.includes(select.value)) {
+                alert('Это время уже занято. Пожалуйста, выберите другое время.');
+                select.value = ''; // Сбрасываем выбранное значение
+            }
+        });
+    </script> -->
+</body>
+<footer class="container medium center marginTop80px">
+    <div class="container">
+        <h4>Logo</h4>
+        <div class="container row spacebtw marginTop20px" id="contacts">
+            <div class= "container contactsCard row">
+                <img src="static/images/phone.png" height="50px">
+                <div class="contactsCardData">
+                    <h5>Телефон</h5>
+                    <h5>293-86-16</h5>
+                </div>
+            </div>
+            <div class= "container contactsCard row">
+                <img src="static/images/mail.png" height="50px">
+                <div class="contactsCardData">
+                    <h5>Mail</h5>
+                    <h5>medassistant@gmail.com</h5>
+                </div>
+            </div>
+            <div class= "container contactsCard row">
+                <img src="static/images/location.png" height="50px">
+                <div class="contactsCardData">
+                    <h5>Адрес</h5>
+                    <h5>г. Минск, ул. Платонова, 39</h5>
+                </div>
+            </div>
+            <div class= "container contactsCard row">
+                <img src="static/images/fax.png" height="50px">
+                <div class="contactsCardData">
+                    <h5>Факс</h5>
+                    <h5>+1-000-0000</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container row spacebtw marginTop40px" id="footerItems">
+
+        <div class="container footerItem">
+            <h4>Услуги</h4>
+            <div class="container footerItemData">
+                <a href="#" class="thin">Онлайн чат</a>
+                <a href="#" class="thin">Диагностика</a>
+                <a href="#" class="thin">Записи</a>
+                <a href="/medical-card" class="thin">Медицинская карта</a>
+            </div>
+        </div>
+
+        <div class="container footerItem">
+            <h4>Колл-центр</h4>
+            <h5>пн-пт 8:00-22:00</h5>
+            <h5>сб-вс 9:00-20:00</h5>
+            <a href="tel:29-321-68-71"  class="thin">a1: 29-321-68-71</a>
+            <a href="tel:33-321-68-71"  class="thin">life: 33-321-68-71</a>
+            <a href="tel:25-321-68-71"  class="thin">mts: 25-321-68-71</a>
+        </div>
+
+        <div class="container footerItem ">
+            <h4>Коммерческие предложения</h4>
+            <div class="container footerItemData">
+                <a href="tel:321-68-71"  class="thin">тел: 321-68-71</a>
+                <a href="#"  class="thin">email: medassistant@offers.com</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-line marginTop80px"></div>
+    <div class="container row spacebtw marginTop10px" style="margin-bottom: 30px;">
+        <div class="container row">
+            <!-- <a href="#" class="marginW30px">Услуги</a>
+            <a href="#" class="marginW30px">Специалисты</a>
+            <a href="#" class="marginW30px">О нас</a>
+            <a href="#" class="marginW30px">Связаться с нами</a> -->
+        </div>
+        <div class="small"><h5 style="color: gray;">© 2024, Все права защищены</h5></div>
+    </div>
+</footer>
+{% endblock %}

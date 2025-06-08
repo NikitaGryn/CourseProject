@@ -1,0 +1,14 @@
+{% extends "queryBase.html" %}
+{% block title %}Рекомендации по здоровью{% endblock %}
+{% block header_block %}Рекомендации по здоровью{% endblock %}
+{% block action %}/recommendation{% endblock %}
+{% block form_block %}
+    {{ form.query(class="form-control", placeholder="Введите запрос", value=form.query.data or '') }}
+    {{ form.submit(class="btn btn-primary", id="submitBtn") }}
+{% endblock %}
+
+{% block answer_block %}
+    <pre id="navigationResult">{{ answer }}</pre>
+{% endblock %}
+
+{% block recommendation_active %} active{% endblock %}

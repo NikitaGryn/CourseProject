@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Регистрация Пациента{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="signup">
+    <div class="container leftW medium mint padding80px fullHeight"  id="signupDiv">
+        <div class="fullWidth leftW">
+            <h3 id="signupTitle">Регистрация</h3>
+        </div>
+        <div class="container">
+            <div class="container medium marginTop40px lightBlueBG rounded">
+                <div class="container" id="formDiv">
+                    <form id="signupForm" action="/signup-patient" method="POST" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        {{ form.firstname(class="form-control", placeholder="Имя", value=form.firstname.data or '') }}
+                        {{ form.surname(class="form-control", placeholder="Фамилия", value=form.surname.data or '') }}
+                        {{ form.dob(class="date-field", placeholder="Дата рождения: дд.мм.гггг", value=form.dob.data or '') }}
+                        {{ form.region(class="form-control", placeholder="Регион: BY/RU/KZ", value=form.region.data or '') }}
+                        {{ form.phone(class="form-control", placeholder="Номер телефона", value=form.phone.data or '') }}
+                        {{ form.email(class="form-control", placeholder="Адрес электронной почты", value=form.email.data or '') }}
+                        {{ form.password(class="form-control", placeholder="Пароль") }}
+                        {{ form.photo(class="form-control", placeholder="Фотография", id="fileInput", accept="image/*", style="display: none;") }}
+
+                        <!-- flash() errors -->
+                        {% for message in get_flashed_messages() %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}    
+                        
+                        <!-- forms errors -->
+                        {% for field, errors in form.errors.items() %}
+                            {% for error in errors %}
+                                <div class="alert alert-danger">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </form>
+                </div>
+
+            </div>
+
+            <a class="addImage round" id="addImageButton">
+                <h3 class="thin">Добавить фото</h3>
+                <div id="imagePreview"></div>
+            </a>
+            
+            {% if error and request.method == 'POST' %}
+            <div class="alert alert-danger">
+                {{ error | safe }}
+            </div>
+            {% endif %}
+
+            <div class="container row medium marginTop40px spacebtw">
+                <a href="/signup"><button class="button">Назад</button></a>
+                {{ form.submit(class="button", id="submitBtn") }}
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='/scripts/singupAppendImage.js') }}"></script>
+    <!-- <script>
+        document.getElementById('addImageButton').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+    
+        document.getElementById('fileInput').addEventListener('change', function() {
+            var fileInput = document.getElementById('fileInput');
+            var addImageButton = document.getElementById('addImageButton'); 
+    
+            while (addImageButton.firstChild) {
+                addImageButton.removeChild(addImageButton.firstChild);
+            }
+    
+            var file = fileInput.files[0];
+            var image = document.createElement('img');
+            image.src = URL.createObjectURL(file);
+            image.style.width = '100%';
+            image.style.height = '100%';
+            image.style.objectFit = 'cover';
+            addImageButton.appendChild(image);
+        });
+    
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('signupForm').submit();
+        });
+    </script> -->
+</body>
+{% endblock %}
